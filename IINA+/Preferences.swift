@@ -129,8 +129,7 @@ class Preferences: NSObject {
     
     @objc dynamic var dmPort: Int {
         get {
-            
-            if Processes.shared.iinaBuildVersion() > 16 {
+			if Processes.shared.iina.buildVersion() > 16 {
                 return defaults(.dmPort) as? Int ?? 19080
             } else {
                 return 19080
@@ -178,6 +177,15 @@ class Preferences: NSObject {
             defaultsSet(colorEncode(newValue), forKey: .stateUnknown)
         }
     }
+	
+	@objc dynamic var bilibiliHTMLDecoder: Bool {
+		get {
+			return defaults(.bilibiliHTMLDecoder) as? Bool ?? false
+		}
+		set {
+			defaultsSet(newValue, forKey: .bilibiliHTMLDecoder)
+		}
+	}
     
     @objc dynamic var bilibiliCodec: Int {
         get {
@@ -196,6 +204,15 @@ class Preferences: NSObject {
             defaultsSet(newValue, forKey: .bililiveHevc)
         }
     }
+	
+	var updateInfo070: Bool {
+		get {
+			return defaults(.updateInfo070) as? Bool ?? false
+		}
+		set {
+			defaultsSet(newValue, forKey: .updateInfo070)
+		}
+	}
     
     private func colorEncode(_ color: NSColor) -> Data {
         (try? NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)) ?? Data()
@@ -239,6 +256,9 @@ enum PreferenceKeys: String {
     case stateReplay
     case stateUnknown
     
+	case bilibiliHTMLDecoder
     case bilibiliCodec
     case bililiveHevc
+	
+	case updateInfo070
 }
